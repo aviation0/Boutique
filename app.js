@@ -2,11 +2,15 @@ var express         = require("express"),
     app             = express(),
     bodyParser      = require("body-parser"),
     mongoose        = require("mongoose"),
+    session         = require("express-session"),
+    flash           = require("connect-flash"),
     passport        = require("passport"),
     LocalStrategy   = require("passport-local"),
     methodOverride  = require("method-override"),
     User            = require("./models/user"),
-    Product         = require("./models/product");
+    Product         = require("./models/product"),
+    validator       = require("express-validator"),
+    MongoStore      = require("connect-mongo")(session);
     
 var productRoutes   = require("./routes/products"),
     indexRoutes     = require("./routes/index");
@@ -14,13 +18,17 @@ var productRoutes   = require("./routes/products"),
 mongoose.connect("mongodb://localhost/boutique");
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(validator());
 app.set("view engine", "ejs");
+app.use(flash()); //or use after express-session
 
 //PASSPORT CONFIGURATION==================================
-app.use(require("express-session")({
+app.use(session({
     secret: "dont do a mundane job",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: new MongoStore({ mongooseConnection : mongoose.connection }),
+    cookie: { maxAge: 180 * 60 * 1000 } //3 minutes
 }));
 
 app.use(passport.initialize());
@@ -32,6 +40,7 @@ passport.deserializeUser(User.deserializeUser());
 //PROVIDING CURRENT USER ID IN ALL TEMPLATES
 app.use(function(req, res, next){
   res.locals.currentUser = req.user;
+  res.locals.session = req.session;
   next();
 });
 
@@ -42,5 +51,5 @@ app.use(indexRoutes);
 app.use("/products", productRoutes);
 
 app.listen(process.env.PORT, process.env.ID, function(){
-   console.log("The server is now running..."); 
+   console.log("The server is now running...");
 });

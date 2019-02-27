@@ -1,0 +1,8 @@
+<% include ./partials/header %>
+<h1>Login</h1>
+<form action="/reset/<%= token %>" method="POST">
+    <input type="text" name="password" placeholder="New password">
+    <input type="text" name="confirm" placeholder="Confirm password">
+    <input type="submit" value="Update Password">
+</form>
+<% include ./partials/footer %>

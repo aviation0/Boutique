@@ -46,7 +46,7 @@ router.put("/:category/:id", function(req, res){
       if(err){
          res.send(err);
       } else{
-         res.send(updatedProduct);
+         res.send(JSON.stringify(updatedProduct));
       }
    });
 });
