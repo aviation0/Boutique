@@ -41,6 +41,8 @@ passport.deserializeUser(User.deserializeUser());
 app.use(function(req, res, next){
   res.locals.currentUser = req.user;
   res.locals.session = req.session;
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Authentication, Access-Control-Allow-Origin, Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 

@@ -15,7 +15,7 @@ router.get("/:category", function(req, res){
 
 //CREATE - add new products
 router.post("/", function(req, res){
-   //console.log(req.body.product);
+   console.log(req.body);
    
    //create new product and save to db
    Product.create(req.body.product, function(err, newlyCreatedProduct){
