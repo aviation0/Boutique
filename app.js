@@ -14,8 +14,9 @@ var express         = require("express"),
     
 var productRoutes   = require("./routes/products"),
     indexRoutes     = require("./routes/index");
-    
-mongoose.connect("mongodb+srv://avi:aviavi11@cluster0-knnrx.mongodb.net/boutique-database");
+
+var url = process.env.DATABASEURL || "mongodb://localhost/boutique";
+mongoose.connect(url);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(validator());
