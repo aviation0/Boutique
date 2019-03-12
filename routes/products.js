@@ -62,47 +62,6 @@ router.delete("/:category/:id", function(req, res){
    });
 });
 
-//=======move to wishlist routes=========
-//add to cart
-router.get("/:category/:id/addToWishlist", function(req, res){
-   Product.findById(req.params.id, function(err, foundProduct){
-      if(err){
-            console.log(err);
-            res.send("not added");
-            
-      } else{
-         //if user is logged in (remove this after adding is logged in middle ware here)
-         if(req.user){
-            var foundProductId = String(foundProduct.id);
-            var inWishlist = false;
-            //searching for product in users wishlist
-            req.user.wishlist.forEach(function(wishlistItem){
-               if(String(wishlistItem)===foundProductId){
-                  inWishlist = true;
-               }
-            });
-            //if product is not in wishlist
-            if(!inWishlist){
-               req.user.wishlist.push(foundProduct);
-               req.user.save();
-               console.log("added");
-               res.send("added to wishlist");
-            } else{
-               res.send("already in wishlist");
-            }
-         } else{
-            res.send("login first");
-         }
-          
-      }
-   });
-});
 
-//remove from cart
-router.get("/:category/:id/removeFromWishlist", function(req, res){
-   req.user.wishlist.pull({ _id : req.params.id });
-   req.user.save();
-   res.send("product removed from wishlist");
-});
 
 module.exports = router;
