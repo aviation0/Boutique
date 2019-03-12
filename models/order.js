@@ -1,8 +1,8 @@
 var mongoose = require("mongoose");
 
 var orderSchema = new mongoose.Schema({
-    orderTime: String,
-    totalAmount: String,
+    //orderTime: String,
+    //totalAmount: String,
     items: [
         {
             type: mongoose.Schema.Types.ObjectId,
@@ -13,8 +13,7 @@ var orderSchema = new mongoose.Schema({
         id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
-        },
-        username: String
+        }
     }
 });
 

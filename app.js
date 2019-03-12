@@ -13,6 +13,7 @@ var express         = require("express"),
     MongoStore      = require("connect-mongo")(session);
     
 var productRoutes   = require("./routes/products"),
+    wishlistRoutes  = require("./routes/wishlist"),
     indexRoutes     = require("./routes/index");
 
 var url = process.env.DATABASEURL || "mongodb://localhost/boutique";
@@ -51,7 +52,9 @@ app.use(function(req, res, next){
 
 
 app.use(indexRoutes);
+app.use(wishlistRoutes);
 app.use("/products", productRoutes);
+
 
 app.listen(process.env.PORT, process.env.ID, function(){
    console.log("The server is now running...");
