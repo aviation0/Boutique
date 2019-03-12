@@ -14,6 +14,7 @@ var express         = require("express"),
     
 var productRoutes   = require("./routes/products"),
     wishlistRoutes  = require("./routes/wishlist"),
+    cartRoutes  = require("./routes/cart"),
     indexRoutes     = require("./routes/index");
 
 var url = process.env.DATABASEURL || "mongodb://localhost/boutique";
@@ -53,6 +54,7 @@ app.use(function(req, res, next){
 
 app.use(indexRoutes);
 app.use(wishlistRoutes);
+app.use(cartRoutes);
 app.use("/products", productRoutes);
 
 
