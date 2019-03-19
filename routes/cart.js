@@ -15,7 +15,7 @@ router.get("/cart", middleware.isLoggedIn, function(req, res){
     });
 });
 
-//=======move to wishlist routes=========
+
 //add to cart
 router.get("/products/:category/:id/addToCart", middleware.isLoggedIn, function(req, res){
     Product.findById(req.params.id, function(err, foundProduct){

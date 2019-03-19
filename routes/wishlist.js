@@ -15,8 +15,8 @@ router.get("/wishlist", middleware.isLoggedIn, function(req, res){
     });
 });
 
-//=======move to wishlist routes=========
-//add to cart
+
+//add to wishlist
 router.get("/products/:category/:id/addToWishlist", middleware.isLoggedIn, function(req, res){
    Product.findById(req.params.id, function(err, foundProduct){
       if(err){
@@ -47,7 +47,7 @@ router.get("/products/:category/:id/addToWishlist", middleware.isLoggedIn, funct
    });
 });
 
-//remove from cart
+//remove from wishlist
 router.get("/products/:category/:id/removeFromWishlist", middleware.isLoggedIn, function(req, res){
    req.user.wishlist.pull({ _id : req.params.id });
    req.user.save();

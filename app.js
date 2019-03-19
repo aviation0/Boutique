@@ -11,10 +11,12 @@ var express         = require("express"),
     Product         = require("./models/product"),
     validator       = require("express-validator"),
     MongoStore      = require("connect-mongo")(session);
-    
+
+//================ROUTES=================
 var productRoutes   = require("./routes/products"),
     wishlistRoutes  = require("./routes/wishlist"),
-    cartRoutes  = require("./routes/cart"),
+    cartRoutes      = require("./routes/cart"),
+    ordersRoutes      = require("./routes/order"),
     indexRoutes     = require("./routes/index");
 
 var url = process.env.DATABASEURL || "mongodb://localhost/boutique";
@@ -51,10 +53,15 @@ app.use(function(req, res, next){
 
 //========================================================
 
+//NEW - show form to create campgrounds
+app.get("/new", function(req, res) {
+ res.render("new"); 
+});
 
 app.use(indexRoutes);
 app.use(wishlistRoutes);
 app.use(cartRoutes);
+app.use(ordersRoutes);
 app.use("/products", productRoutes);
 
 
