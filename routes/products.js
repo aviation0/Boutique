@@ -59,28 +59,40 @@ router.get("/:category", function(req, res){
 });
 
 //CREATE - add new products
-router.post("/", upload.array('image'),function(req, res){
+router.post("/", upload.array('image'), function(req, res){
    console.log(req.files);
-   res.send("trying");
-   /*var upload = async function(err, image){
-      var result = [];
-      for(int i = 0 ; i < 2; ++i){
-         result[i] = await cloudinary.v2.uploader.upload(req.files[i].path);
-      }
-      
-   }
-   console.log(result);*/
-   /*//create new product and save to db
-   Product.create(req.body.product, function(err, newlyCreatedProduct){
+   //res.send("trying");
+   
+   
+   //create new product and save to db
+   Product.create(req.body.product, async function(err, newlyCreatedProduct){
       if(err){
+          console.log("FROM CREATE");
           console.log(err);
       } else{
-          //res.redirect("/products/");
-          res.send(JSON.stringify(newlyCreatedProduct));
+         var results = [];
+         for (var i = 0; i < req.files.length; ++i) {
+            await cloudinary.v2.uploader.upload(req.files[i].path, function(err, result){
+               if(err){
+                  console.log("FROM CLOUDINARY Image: ");
+                  console.log(err);
+               } else {
+                  console.log(result);
+                  results.push(result);
+                  newlyCreatedProduct.imageId.push(result.public_id);
+                  newlyCreatedProduct.image.push(result.secure_url);
+               }
+            });
+         }
+         //console.log("RESULTS: \n" + results);
+         
+         newlyCreatedProduct.save();
+   
+         //res.redirect("/products/");
+         res.send(JSON.stringify(newlyCreatedProduct));
       }
-   });*/
+   });
 });
-
 
 
 //SHOW - show more info about one product
