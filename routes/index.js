@@ -40,7 +40,7 @@ router.post("/register", function(req, res) {
      }
      //LOGGING IN AFTER SUCCESSFULL REGISTRATION
      passport.authenticate("local")(req, res, function(){
-       res.redirect("/");
+       res.send("success");
      });
    });
 });
@@ -53,9 +53,10 @@ router.get("/login", middleware.notLoggedIn, function(req, res) {
 //USES REQ.BODY.USERNAME && REQ.BODY.PASSWORD
 router.post("/login", passport.authenticate("local", 
   {
-   successRedirect : "/",
-   failureRedirect : "/login"
+   //successRedirect : "/",
+   //failureRedirect : "/login"
   }), function(req, res) {
+    res.send("success");
 });
 
 //log out 

@@ -83,6 +83,7 @@ router.post("/", upload.array('image'), function(req, res){
                   newlyCreatedProduct.image.push(result.secure_url);
                }
             });
+            //eval(require("locus"));
          }
          //console.log("RESULTS: \n" + results);
          
