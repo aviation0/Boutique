@@ -21,6 +21,8 @@ router.get("/register", middleware.notLoggedIn, function(req, res) {
 
 //HANDLE SIGNUP LOGIC
 router.post("/register", function(req, res) {
+   console.log(req.body);
+   //eval(require("locus"));
    var messages = [];
    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
    req.checkBody('username', 'Invalid username').notEmpty().isLength({min:5}).withMessage('Username must be at least 5 chars long');
@@ -56,7 +58,7 @@ router.post("/login", passport.authenticate("local",
    //successRedirect : "/",
    //failureRedirect : "/login"
   }), function(req, res) {
-    res.send("success");
+    res.send(JSON.stringify({message:"success"}));
 });
 
 //log out 

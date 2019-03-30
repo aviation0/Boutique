@@ -11,6 +11,9 @@ var express         = require("express"),
     Product         = require("./models/product"),
     validator       = require("express-validator"),
     MongoStore      = require("connect-mongo")(session);
+    //config          = require('../Boutique/node_modules/redeyed/config');
+    
+require('dotenv').config();
 
 //================ROUTES=================
 var productRoutes   = require("./routes/products"),
