@@ -23,8 +23,12 @@ var productRoutes   = require("./routes/products"),
     indexRoutes     = require("./routes/index");
 
 var url = process.env.DATABASEURL || "mongodb://localhost/boutique";
-mongoose.connect(url);
+// option  { useNewUrlParser: true } to avoid DeprecationWarning
+mongoose.connect(url, { useNewUrlParser: true });
+// avoid DeprecationWarning: collection.ensureIndex is deprecated
+mongoose.set('useCreateIndex', true);
 
+app.use(bodyParser.json()); //to get req.body from axios 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(validator());
 app.set("view engine", "ejs");

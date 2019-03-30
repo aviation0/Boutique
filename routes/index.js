@@ -21,7 +21,7 @@ router.get("/register", middleware.notLoggedIn, function(req, res) {
 
 //HANDLE SIGNUP LOGIC
 router.post("/register", function(req, res) {
-   console.log(req.body);
+   //console.log(req.body);
    //eval(require("locus"));
    var messages = [];
    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
@@ -42,7 +42,7 @@ router.post("/register", function(req, res) {
      }
      //LOGGING IN AFTER SUCCESSFULL REGISTRATION
      passport.authenticate("local")(req, res, function(){
-       res.send("success");
+      res.send(JSON.stringify({message:"success"}));
      });
    });
 });
@@ -53,12 +53,16 @@ router.get("/login", middleware.notLoggedIn, function(req, res) {
 });
 
 //USES REQ.BODY.USERNAME && REQ.BODY.PASSWORD
-router.post("/login", passport.authenticate("local", 
+router.post("/login", passport.authenticate("local"/*, 
   {
-   //successRedirect : "/",
-   //failureRedirect : "/login"
-  }), function(req, res) {
-    res.send(JSON.stringify({message:"success"}));
+   successRedirect : "/",
+   failureRedirect : "/login"
+  }*/), function(req, res) {
+    if(req.user) {
+      res.send(JSON.stringify({message:"success"}));
+    } else {
+      res.send(JSON.stringify({message:"unauthorized"}));
+    }
 });
 
 //log out 
@@ -84,7 +88,8 @@ router.post("/forgot", function(req, res, next){
       User.findOne({ email: req.body.email }, function(err, user) {
         if (!user) {
           /*req.flash('error', 'No account with that email address exists.');*/
-          return res.redirect('/forgot');
+          //return res.redirect('/forgot');
+          return res.send(JSON.stringify({message:"No account with that email address exists"}));
         }
 
         user.resetPasswordToken = token;
@@ -115,12 +120,13 @@ router.post("/forgot", function(req, res, next){
       smtpTransport.sendMail(mailOptions, function(err) {
         console.log('mail sent');
         /*req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');*/
+        res.send(JSON.stringify({message:"success"}));
         done(err, 'done');
       });
     }
   ], function(err) {
     if (err) return next(err);
-    res.redirect('/forgot');
+    res.send(JSON.stringify({message:err}));
   });
 });
 
