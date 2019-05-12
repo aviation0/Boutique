@@ -25,6 +25,6 @@ Explore other routes [here](https://github.com/aviation0/Boutique/tree/master/ro
 npm install
 ```
 
-### Database & ODM
+### Database & ORM
 **MongoDB** and **mongoose**
 
