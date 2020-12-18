@@ -1,6 +1,6 @@
 # Boutique
 **The API currently offers various endpoints to make a e-commerce application functional.<br>
-Built without Node.js runtime environment, Express as the framework and MongoDB for the database.**
+Built with Node.js runtime environment, Express as the framework and MongoDB for the database.**
 
 ## URL
 
